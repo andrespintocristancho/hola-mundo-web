@@ -3,129 +3,212 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TaskFlow - Gestor de Tareas</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <title>TaskFlow — Gestor de tareas profesional</title>
+  <link rel="stylesheet" href="style.css?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Background decorative gradients -->
+  <div class="bg-decoration" aria-hidden="true">
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+  </div>
 
   <!-- Header -->
   <header class="header">
     <div class="header-inner">
       <div class="brand">
-        <span class="brand-icon">&#10003;</span>
-        <h1 class="brand-name">TaskFlow</h1>
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+            <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-name">TaskFlow</h1>
+          <span class="brand-tag">Gestor profesional</span>
+        </div>
       </div>
-      <button id="theme-toggle" class="theme-btn" title="Cambiar tema">
-        <span id="theme-icon">&#9790;</span>
-      </button>
+      <div class="header-actions">
+        <span class="header-badge">
+          <span class="dot"></span> En vivo
+        </span>
+        <button id="theme-toggle" class="icon-btn" title="Cambiar tema" aria-label="Cambiar tema">
+          <svg id="icon-moon" class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg id="icon-sun" class="icon hidden" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- Hero / contexto -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h2 class="hero-title">Organiza tu día con claridad</h2>
+      <p class="hero-subtitle">Gestiona prioridades, categorías y progreso en un solo lugar. Tus datos se guardan automáticamente.</p>
+    </div>
+  </section>
 
   <!-- Main -->
   <main class="main">
 
-    <!-- Panel izquierdo: formulario -->
+    <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="card">
-        <h2 class="card-title">Nueva tarea</h2>
+
+      <!-- Form card -->
+      <div class="card card-form">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h2 class="card-title">Nueva tarea</h2>
+            <p class="card-sub">Añádela a tu lista</p>
+          </div>
+        </div>
+
         <form id="todo-form" autocomplete="off">
           <div class="form-group">
-            <label for="todo-input">Tarea</label>
+            <label for="todo-input">Título</label>
             <input id="todo-input" type="text" placeholder="¿Qué necesitas hacer?" required>
           </div>
+
           <div class="form-row">
             <div class="form-group">
               <label for="priority-select">Prioridad</label>
-              <select id="priority-select">
-                <option value="low">&#9679; Baja</option>
-                <option value="medium" selected>&#9679; Media</option>
-                <option value="high">&#9679; Alta</option>
-              </select>
+              <div class="select-wrap">
+                <select id="priority-select">
+                  <option value="low">Baja</option>
+                  <option value="medium" selected>Media</option>
+                  <option value="high">Alta</option>
+                </select>
+              </div>
             </div>
             <div class="form-group">
               <label for="category-select">Categoría</label>
-              <select id="category-select">
-                <option value="personal">Personal</option>
-                <option value="work">Trabajo</option>
-                <option value="study">Estudio</option>
-                <option value="other">Otra</option>
-              </select>
+              <div class="select-wrap">
+                <select id="category-select">
+                  <option value="personal">Personal</option>
+                  <option value="work">Trabajo</option>
+                  <option value="study">Estudio</option>
+                  <option value="other">Otra</option>
+                </select>
+              </div>
             </div>
           </div>
+
           <button type="submit" class="btn btn-primary btn-block">
-            <span>&#43;</span> Agregar tarea
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            Agregar tarea
           </button>
         </form>
       </div>
 
-      <!-- Estadísticas -->
-      <div class="card stats-card">
-        <h2 class="card-title">Resumen</h2>
+      <!-- Stats card -->
+      <div class="card card-stats">
+        <div class="card-header">
+          <div class="card-icon card-icon-accent">
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M3 3v18h18M7 14l4-4 4 4 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h2 class="card-title">Resumen</h2>
+            <p class="card-sub">Tu progreso hoy</p>
+          </div>
+        </div>
+
         <div class="stats-grid">
           <div class="stat">
             <span class="stat-number" id="count-total">0</span>
             <span class="stat-label">Total</span>
           </div>
-          <div class="stat">
-            <span class="stat-number stat-pending" id="count-pending">0</span>
+          <div class="stat stat-warning">
+            <span class="stat-number" id="count-pending">0</span>
             <span class="stat-label">Pendientes</span>
           </div>
-          <div class="stat">
-            <span class="stat-number stat-done" id="count-completed">0</span>
-            <span class="stat-label">Completadas</span>
+          <div class="stat stat-success">
+            <span class="stat-number" id="count-completed">0</span>
+            <span class="stat-label">Hechas</span>
           </div>
         </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar" id="progress-bar"></div>
+
+        <div class="progress-block">
+          <div class="progress-head">
+            <span class="progress-label">Progreso</span>
+            <span class="progress-text" id="progress-text">0%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
         </div>
-        <p class="progress-text" id="progress-text">0% completado</p>
       </div>
     </aside>
 
-    <!-- Panel derecho: lista -->
+    <!-- Content -->
     <section class="content">
-      <div class="card">
+      <div class="card card-list">
 
         <!-- Toolbar -->
         <div class="toolbar">
           <div class="search-box">
-            <span class="search-icon">&#128269;</span>
-            <input id="search-input" type="text" placeholder="Buscar tareas...">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input id="search-input" type="text" placeholder="Buscar tareas, categorías, prioridades...">
+            <kbd class="search-kbd">⌘K</kbd>
           </div>
           <div class="toolbar-actions">
-            <button id="sort-date-btn" class="btn btn-sm btn-outline" title="Ordenar por fecha">
-              &#128197; Fecha
+            <button id="sort-date-btn" class="btn btn-sm btn-ghost" title="Ordenar por fecha">
+              <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Fecha
             </button>
-            <button id="sort-priority-btn" class="btn btn-sm btn-outline" title="Ordenar por prioridad">
-              &#9733; Prioridad
+            <button id="sort-priority-btn" class="btn btn-sm btn-ghost" title="Ordenar por prioridad">
+              <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              Prioridad
             </button>
           </div>
         </div>
 
-        <!-- Filtros -->
+        <!-- Filters -->
         <div class="filters">
-          <button class="filter-btn is-active" data-filter="all">Todas</button>
-          <button class="filter-btn" data-filter="active">Pendientes</button>
-          <button class="filter-btn" data-filter="completed">Completadas</button>
+          <button class="filter-btn is-active" data-filter="all">
+            Todas <span class="filter-count" id="filter-count-all">0</span>
+          </button>
+          <button class="filter-btn" data-filter="active">
+            Pendientes <span class="filter-count" id="filter-count-active">0</span>
+          </button>
+          <button class="filter-btn" data-filter="completed">
+            Completadas <span class="filter-count" id="filter-count-completed">0</span>
+          </button>
         </div>
 
-        <!-- Lista de tareas -->
+        <!-- List -->
         <ul id="todo-list" class="todo-list"></ul>
 
-        <!-- Estado vacío -->
+        <!-- Empty state -->
         <div id="empty-state" class="empty-state" style="display:none;">
-          <span class="empty-icon">&#128203;</span>
-          <p class="empty-text">No hay tareas por aquí</p>
-          <p class="empty-sub">Agrega una nueva tarea para comenzar</p>
+          <div class="empty-illustration">
+            <svg viewBox="0 0 64 64" fill="none" width="64" height="64">
+              <rect x="10" y="14" width="44" height="42" rx="6" stroke="currentColor" stroke-width="2" stroke-opacity=".5"/>
+              <path d="M20 26h24M20 34h24M20 42h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".3"/>
+              <circle cx="48" cy="16" r="8" fill="currentColor" fill-opacity=".15"/>
+              <path d="m44 16 3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="empty-text">No hay tareas aquí</h3>
+          <p class="empty-sub">Agrega una nueva tarea desde el panel izquierdo para comenzar.</p>
         </div>
 
-        <!-- Footer lista -->
+        <!-- List footer -->
         <div class="list-footer">
-          <button id="clear-completed" class="btn btn-sm btn-danger-outline" type="button">
-            Eliminar completadas
+          <span class="footer-info" id="footer-info">0 tareas</span>
+          <button id="clear-completed" class="btn btn-sm btn-ghost-danger" type="button">
+            <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Limpiar completadas
           </button>
         </div>
 
@@ -136,9 +219,9 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>TaskFlow &mdash; Gestiona tus tareas de forma simple y elegante.</p>
+    <p>TaskFlow · Construido con cuidado · Tus datos viven solo en tu navegador.</p>
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
