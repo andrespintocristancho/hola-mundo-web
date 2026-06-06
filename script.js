@@ -1,1 +1,11 @@
-Y29uc3QgYnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RvZ2dsZS1idG4nKTsKYnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywoKT0+ewogIGNvbnN0IGN1cnJlbnRUaGVtZSA9IGRvY3VtZW50LmRvY3VtZW50RWxlbWVudC5nZXRBdHRyaWJ1dGUoJ2RhdGEtdGhlbWUnKTsKICBpZihjdXJyZW50VGhlbWU9PT0nZGFyaycpewogICAgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LnJlbW92ZUF0dHJpYnV0ZSgnZGF0YS10aGVtZScpOwogICAgYnV0dG9uLnRleHRDb250ZW50PSdDYW1iaWFyIGEgbW9kbyBvc2N1cm8nOwogIH1lbHNlewogICAgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LnNldEF0dHJpYnV0ZSgnZGF0YS10aGVtZScsJ2RhcmsnKTsKICAgIGJ1dHRvbi50ZXh0Q29udGVudD0nQ2FtYmlhciBhIG1vZG8gY2xhcm8nOwogIH0KfSk7Cg==
+const button = document.getElementById('toggle-btn');
+button.addEventListener('click',()=>{
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  if(currentTheme==='dark'){
+    document.documentElement.removeAttribute('data-theme');
+    button.textContent='Cambiar a modo oscuro';
+  }else{
+    document.documentElement.setAttribute('data-theme','dark');
+    button.textContent='Cambiar a modo claro';
+  }
+});
