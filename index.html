@@ -19,12 +19,22 @@
       <button type="submit" class="add-btn">Agregar</button>
     </form>
 
+    <nav class="filters" aria-label="Filtros de tareas">
+      <button class="filter-btn is-active" data-filter="all" aria-pressed="true">Todas</button>
+      <button class="filter-btn" data-filter="active" aria-pressed="false">Pendientes</button>
+      <button class="filter-btn" data-filter="completed" aria-pressed="false">Completadas</button>
+    </nav>
+
     <section>
       <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
     </section>
 
     <footer class="meta">
-      <span id="pending-count">0 pendientes</span>
+      <div class="counters">
+        <span id="count-total">0 total</span>
+        <span id="count-pending">0 pendientes</span>
+        <span id="count-completed">0 completadas</span>
+      </div>
       <button id="clear-completed" class="link-btn" type="button">Eliminar completadas</button>
     </footer>
   </main>
