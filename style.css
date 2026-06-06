@@ -20,6 +20,7 @@
   --warning: #f59e0b;
   --warning-soft: rgba(245,158,11,.12);
   --danger: #ef4444;
+  --danger-hover: #f87171;
   --danger-soft: rgba(239,68,68,.12);
   --radius: 12px;
   --radius-sm: 8px;
@@ -121,8 +122,15 @@ input[type="text"]:focus, select:focus { border-color: var(--primary); box-shado
   border: none; cursor: pointer; transition: var(--transition);
   text-decoration: none;
 }
-.btn-primary { background: var(--primary); color: #fff; }
-.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+.btn-primary {
+  background: var(--danger);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--danger-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239,68,68,.35);
+}
 .btn-block { width: 100%; }
 .btn-sm { padding: .45rem .75rem; font-size: .8rem; }
 .btn-outline {
