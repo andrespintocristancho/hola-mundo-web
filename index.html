@@ -2,68 +2,143 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>App de Tareas Mejorada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskFlow - Gestor de Tareas</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="app-header">
-    <h1>App de Tareas</h1>
-    <button id="theme-toggle" aria-pressed="false" title="Cambiar tema">🌗</button>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">&#10003;</span>
+        <h1 class="brand-name">TaskFlow</h1>
+      </div>
+      <button id="theme-toggle" class="theme-btn" title="Cambiar tema">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
   </header>
 
-  <div class="search-container">
-    <label for="search-input" class="sr-only">Buscar tarea</label>
-    <input id="search-input" type="text" placeholder="Buscar tarea..." />
-  </div>
+  <!-- Main -->
+  <main class="main">
 
-  <main class="container">
-    <form id="todo-form" autocomplete="off">
-      <label for="todo-input" class="sr-only">Nueva tarea</label>
-      <input id="todo-input" name="todo" type="text" placeholder="Escribe una tarea" required>
-
-      <label for="priority-select">Prioridad</label>
-      <select id="priority-select" name="priority">
-        <option value="low">Baja</option>
-        <option value="medium" selected>Media</option>
-        <option value="high">Alta</option>
-      </select>
-
-      <label for="category-select">Categoría</label>
-      <select id="category-select" name="category">
-        <option value="personal">Personal</option>
-        <option value="work">Trabajo</option>
-        <option value="study">Estudio</option>
-        <option value="other">Otra</option>
-      </select>
-
-      <div class="sort-container">
-        <button id="sort-date-btn" type="button" title="Ordenar por fecha">Ordenar por Fecha</button>
-        <button id="sort-priority-btn" type="button" title="Ordenar por prioridad">Ordenar por Prioridad</button>
+    <!-- Panel izquierdo: formulario -->
+    <aside class="sidebar">
+      <div class="card">
+        <h2 class="card-title">Nueva tarea</h2>
+        <form id="todo-form" autocomplete="off">
+          <div class="form-group">
+            <label for="todo-input">Tarea</label>
+            <input id="todo-input" type="text" placeholder="¿Qué necesitas hacer?" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="priority-select">Prioridad</label>
+              <select id="priority-select">
+                <option value="low">&#9679; Baja</option>
+                <option value="medium" selected>&#9679; Media</option>
+                <option value="high">&#9679; Alta</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="category-select">Categoría</label>
+              <select id="category-select">
+                <option value="personal">Personal</option>
+                <option value="work">Trabajo</option>
+                <option value="study">Estudio</option>
+                <option value="other">Otra</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>&#43;</span> Agregar tarea
+          </button>
+        </form>
       </div>
 
-      <button type="submit" class="add-btn">Agregar</button>
-    </form>
+      <!-- Estadísticas -->
+      <div class="card stats-card">
+        <h2 class="card-title">Resumen</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat-number" id="count-total">0</span>
+            <span class="stat-label">Total</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number stat-pending" id="count-pending">0</span>
+            <span class="stat-label">Pendientes</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number stat-done" id="count-completed">0</span>
+            <span class="stat-label">Completadas</span>
+          </div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p class="progress-text" id="progress-text">0% completado</p>
+      </div>
+    </aside>
 
-    <nav class="filters" aria-label="Filtros de tareas">
-      <button class="filter-btn is-active" data-filter="all" aria-pressed="true">Todas</button>
-      <button class="filter-btn" data-filter="active" aria-pressed="false">Pendientes</button>
-      <button class="filter-btn" data-filter="completed" aria-pressed="false">Completadas</button>
-    </nav>
+    <!-- Panel derecho: lista -->
+    <section class="content">
+      <div class="card">
 
-    <section>
-      <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div class="search-box">
+            <span class="search-icon">&#128269;</span>
+            <input id="search-input" type="text" placeholder="Buscar tareas...">
+          </div>
+          <div class="toolbar-actions">
+            <button id="sort-date-btn" class="btn btn-sm btn-outline" title="Ordenar por fecha">
+              &#128197; Fecha
+            </button>
+            <button id="sort-priority-btn" class="btn btn-sm btn-outline" title="Ordenar por prioridad">
+              &#9733; Prioridad
+            </button>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+          <button class="filter-btn is-active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="active">Pendientes</button>
+          <button class="filter-btn" data-filter="completed">Completadas</button>
+        </div>
+
+        <!-- Lista de tareas -->
+        <ul id="todo-list" class="todo-list"></ul>
+
+        <!-- Estado vacío -->
+        <div id="empty-state" class="empty-state" style="display:none;">
+          <span class="empty-icon">&#128203;</span>
+          <p class="empty-text">No hay tareas por aquí</p>
+          <p class="empty-sub">Agrega una nueva tarea para comenzar</p>
+        </div>
+
+        <!-- Footer lista -->
+        <div class="list-footer">
+          <button id="clear-completed" class="btn btn-sm btn-danger-outline" type="button">
+            Eliminar completadas
+          </button>
+        </div>
+
+      </div>
     </section>
 
-    <footer class="meta">
-      <div class="counters">
-        <span id="count-total">0 totales</span>
-        <span id="count-pending">0 pendientes</span>
-        <span id="count-completed">0 completadas</span>
-      </div>
-      <button id="clear-completed" class="link-btn" type="button">Eliminar completadas</button>
-    </footer>
   </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>TaskFlow &mdash; Gestiona tus tareas de forma simple y elegante.</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
