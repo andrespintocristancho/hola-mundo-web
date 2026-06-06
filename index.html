@@ -3,15 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Página Moderna</title>
+  <title>App de Tareas</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="app-header">
+    <h1>App de Tareas</h1>
+    <button id="theme-toggle" aria-pressed="false" title="Cambiar tema">🌙</button>
+  </header>
+
   <main class="container">
-    <h1>Bienvenido a la página moderna</h1>
-    <p>Haz clic en el botón para cambiar el tema.</p>
-    <button id="toggle-btn">Cambiar a modo oscuro</button>
+    <form id="todo-form" autocomplete="off">
+      <label for="todo-input" class="sr-only">Nueva tarea</label>
+      <input id="todo-input" name="todo" type="text" placeholder="Escribe una tarea y pulsa Enter" required>
+      <button type="submit" class="add-btn">Agregar</button>
+    </form>
+
+    <section>
+      <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+    </section>
+
+    <footer class="meta">
+      <span id="pending-count">0 pendientes</span>
+      <button id="clear-completed" class="link-btn" type="button">Eliminar completadas</button>
+    </footer>
   </main>
-  <script src="script.js"></script>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
