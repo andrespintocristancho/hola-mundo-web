@@ -1,27 +1,71 @@
-# App de Tareas Mejorada
+# TaskFlow - Gestor de Tareas Profesional
 
-Esta aplicación web permite gestionar tareas con funciones adicionales.
+Aplicación web moderna para gestionar tareas. Funciona 100% en el navegador, sin backend. Los datos se guardan automáticamente en localStorage.
 
-## Nuevas funcionalidades:
-- Barra de búsqueda para filtrar tareas por texto.
-- Selección de **prioridad** (Baja, Media, Alta) y **categoría** (Personal, Trabajo, etc.).
-- Botones para ordenar por **fecha** o **prioridad**.
-- Animaciones visuales al agregar y eliminar tareas.
-- Diseño responsive para dispositivos móviles.
-- Persistencia en **localStorage** (incluye prioridad y categoría).
-- Modo claro/oscuro configurable.
+---
 
-## Uso:
-1. Abrir `index.html` en el navegador.
-2. Añadir tarea, elegir prioridad y categoría.
-3. Utilizar la barra de búsqueda y los botones de ordenación según preferencia.
-4. Cambiar el tema desde el botón superior.
+## Características
 
-## Archivos:
-- `index.html`: Estructura HTML.
-- `style.css`: Estilos responsive y animaciones.
-- `script.js`: Lógica de tareas (búsqueda, ordenación, persistencia).
+- **Interfaz profesional** con layout de dos paneles (sidebar + lista).
+- **Barra de búsqueda** para filtrar tareas por texto, categoría o prioridad.
+- **Prioridad por tarea**: Baja, Media, Alta (con badges de colores).
+- **Categoría por tarea**: Personal, Trabajo, Estudio, Otra.
+- **Ordenación** por fecha o por prioridad (ascendente/descendente).
+- **Filtros rápidos**: Todas, Pendientes, Completadas (pills redondeadas).
+- **Edición inline** haciendo clic en "Editar" (sin popups).
+- **Animaciones suaves** al agregar y eliminar tareas.
+- **Barra de progreso** visual con porcentaje completado.
+- **Panel de estadísticas**: Total, Pendientes, Completadas.
+- **Confirmación** antes de eliminar tareas completadas.
+- **Modo claro / oscuro** con detección automática del sistema.
+- **Diseño responsive** optimizado para móvil, tablet y escritorio.
+- **Persistencia completa** en localStorage.
+- **Tipografía Inter** de Google Fonts.
+- **Accesibilidad**: checkboxes personalizados, labels, aria attributes.
 
-### Notas:
-- Todo se guarda en el navegador, no requiere backend.
-- Diseñado para funcionar en GitHub Pages usando la carpeta raíz.
+---
+
+## Archivos
+
+| Archivo       | Descripción                                        |
+|---------------|----------------------------------------------------|
+| `index.html`  | Estructura HTML con layout profesional             |
+| `style.css`   | Estilos, variables CSS, animaciones, responsive    |
+| `script.js`   | Lógica SPA completa con todas las funcionalidades  |
+| `README.md`   | Documentación del proyecto                         |
+
+---
+
+## Uso
+
+1. Abre `index.html` en tu navegador.
+2. Escribe una tarea, selecciona prioridad y categoría, y presiona **Agregar tarea**.
+3. Usa la **barra de búsqueda** para filtrar en tiempo real.
+4. Usa los botones **Fecha** y **Prioridad** para ordenar.
+5. Filtra por estado con las pills: **Todas**, **Pendientes**, **Completadas**.
+6. Haz clic en **Editar** para modificar una tarea directamente en la lista.
+7. Elimina tareas individualmente o todas las completadas.
+8. Cambia entre tema claro y oscuro con el botón del header.
+9. Cierra y vuelve a abrir: tus datos se conservan.
+
+---
+
+## Tecnologías
+
+- HTML5
+- CSS3 (Custom Properties, Grid, Flexbox, Keyframes)
+- JavaScript ES6+ (Vanilla)
+- Google Fonts (Inter)
+- localStorage API
+
+---
+
+## Notas
+
+- No requiere backend, base de datos ni instalación.
+- Funciona como sitio estático en GitHub Pages.
+- Todo el código es texto plano, sin dependencias externas (excepto la fuente).
+
+---
+
+Creado con cuidado para ofrecer una experiencia de gestión de tareas moderna y profesional.
