@@ -1,8 +1,8 @@
 /* ========================================
-   TaskFlow - Lógica Profesional
+   TaskFlow — Lógica Premium
    ======================================== */
 
-const STORAGE_KEY = 'taskflow-v4';
+const STORAGE_KEY = 'taskflow-v5';
 const THEME_KEY = 'taskflow-theme';
 
 let tareas = [];
@@ -11,7 +11,7 @@ let busqueda = '';
 let ordenarPor = '';
 let ordenAsc = true;
 
-/* --- Selectores --- */
+/* Selectores */
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
@@ -28,35 +28,55 @@ const filterBtns = $$('.filter-btn');
 const countTotal = $('#count-total');
 const countPending = $('#count-pending');
 const countCompleted = $('#count-completed');
+const filterCountAll = $('#filter-count-all');
+const filterCountActive = $('#filter-count-active');
+const filterCountCompleted = $('#filter-count-completed');
+const footerInfo = $('#footer-info');
 const progressBar = $('#progress-bar');
 const progressText = $('#progress-text');
 const emptyState = $('#empty-state');
 const themeToggle = $('#theme-toggle');
-const themeIcon = $('#theme-icon');
+const iconMoon = $('#icon-moon');
+const iconSun = $('#icon-sun');
 
-/* --- Utilidades --- */
+/* Utilidades */
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
 const PRIORITY_LABELS = { low: 'Baja', medium: 'Media', high: 'Alta' };
 const PRIORITY_RANK = { high: 3, medium: 2, low: 1 };
 const CATEGORY_LABELS = { personal: 'Personal', work: 'Trabajo', study: 'Estudio', other: 'Otra' };
 
+/* SVG icons */
+const ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_DELETE = '<svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14ZM10 11v6M14 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" width="11" height="11"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
 function formatDate(ts) {
   try {
     const d = new Date(ts);
-    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) +
-      ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    const ahora = new Date();
+    const diffMs = ahora - d;
+    const diffMin = Math.floor(diffMs / 60000);
+    const diffHrs = Math.floor(diffMs / 3600000);
+    const diffDias = Math.floor(diffMs / 86400000);
+
+    if (diffMin < 1) return 'Ahora mismo';
+    if (diffMin < 60) return `Hace ${diffMin} min`;
+    if (diffHrs < 24) return `Hace ${diffHrs} h`;
+    if (diffDias < 7) return `Hace ${diffDias} d`;
+    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
   } catch { return ''; }
 }
 
-/* --- Persistencia --- */
+/* Persistencia */
 function guardar() { localStorage.setItem(STORAGE_KEY, JSON.stringify(tareas)); }
 function cargar() {
   try { tareas = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
   catch { tareas = []; }
 }
 
-/* --- Contadores y progreso --- */
+/* Estadísticas */
 function actualizarEstadisticas() {
   const total = tareas.length;
   const completadas = tareas.filter(t => t.completada).length;
@@ -66,11 +86,20 @@ function actualizarEstadisticas() {
   countTotal.textContent = total;
   countPending.textContent = pendientes;
   countCompleted.textContent = completadas;
+  filterCountAll.textContent = total;
+  filterCountActive.textContent = pendientes;
+  filterCountCompleted.textContent = completadas;
   progressBar.style.width = porcentaje + '%';
-  progressText.textContent = porcentaje + '% completado';
+  progressText.textContent = porcentaje + '%';
+
+  footerInfo.textContent = total === 0
+    ? 'Sin tareas todavía'
+    : total === 1
+      ? '1 tarea'
+      : `${total} tareas · ${pendientes} pendientes`;
 }
 
-/* --- Filtrado y ordenación --- */
+/* Filtrado y orden */
 function obtenerTareasFiltradas() {
   let resultado = tareas.slice();
 
@@ -81,7 +110,7 @@ function obtenerTareasFiltradas() {
     const q = busqueda.toLowerCase();
     resultado = resultado.filter(t =>
       t.titulo.toLowerCase().includes(q) ||
-      CATEGORY_LABELS[t.categoria].toLowerCase().includes(q) ||
+      (CATEGORY_LABELS[t.categoria] || '').toLowerCase().includes(q) ||
       PRIORITY_LABELS[t.prioridad].toLowerCase().includes(q)
     );
   }
@@ -90,13 +119,15 @@ function obtenerTareasFiltradas() {
     resultado.sort((a, b) => ordenAsc ? a.creadaAt - b.creadaAt : b.creadaAt - a.creadaAt);
   }
   if (ordenarPor === 'priority') {
-    resultado.sort((a, b) => ordenAsc ? PRIORITY_RANK[a.prioridad] - PRIORITY_RANK[b.prioridad] : PRIORITY_RANK[b.prioridad] - PRIORITY_RANK[a.prioridad]);
+    resultado.sort((a, b) => ordenAsc
+      ? PRIORITY_RANK[a.prioridad] - PRIORITY_RANK[b.prioridad]
+      : PRIORITY_RANK[b.prioridad] - PRIORITY_RANK[a.prioridad]);
   }
 
   return resultado;
 }
 
-/* --- Renderizado --- */
+/* Render */
 function render() {
   const filtradas = obtenerTareasFiltradas();
 
@@ -112,23 +143,24 @@ function render() {
     const li = document.createElement('li');
     li.className = 'todo-item' + (t.completada ? ' completed' : '');
     li.dataset.id = t.id;
+    li.dataset.priority = t.prioridad;
 
     li.innerHTML = `
       <label class="custom-checkbox">
         <input type="checkbox" ${t.completada ? 'checked' : ''}>
-        <span class="checkmark">${t.completada ? '&#10003;' : ''}</span>
+        <span class="checkmark">${t.completada ? ICON_CHECK : ''}</span>
       </label>
       <div class="todo-info">
         <span class="todo-title">${escapeHTML(t.titulo)}</span>
         <div class="todo-meta">
           <span class="badge badge-${t.prioridad}">${PRIORITY_LABELS[t.prioridad]}</span>
           <span class="badge badge-category">${CATEGORY_LABELS[t.categoria] || t.categoria}</span>
-          <span class="todo-date">${formatDate(t.creadaAt)}</span>
+          <span class="todo-date">${ICON_CLOCK} ${formatDate(t.creadaAt)}</span>
         </div>
       </div>
       <div class="todo-actions">
-        <button class="action-btn edit-btn" title="Editar">&#9998;</button>
-        <button class="action-btn delete-btn" title="Eliminar">&#10005;</button>
+        <button class="action-btn edit-btn" title="Editar" aria-label="Editar">${ICON_EDIT}</button>
+        <button class="action-btn delete-btn" title="Eliminar" aria-label="Eliminar">${ICON_DELETE}</button>
       </div>
     `;
 
@@ -150,7 +182,7 @@ function escapeHTML(str) {
   return div.innerHTML;
 }
 
-/* --- Acciones --- */
+/* Acciones */
 function agregarTarea(titulo, prioridad, categoria) {
   tareas.unshift({
     id: uid(),
@@ -210,11 +242,10 @@ function editarInline(id, li) {
   inputEdit.addEventListener('blur', guardarEdicion);
 }
 
-/* --- UI Filtros --- */
+/* UI Helpers */
 function actualizarFiltrosUI() {
   filterBtns.forEach(btn => {
-    const activo = btn.dataset.filter === filtro;
-    btn.classList.toggle('is-active', activo);
+    btn.classList.toggle('is-active', btn.dataset.filter === filtro);
   });
 }
 
@@ -223,7 +254,7 @@ function actualizarSortUI() {
   btnSortPriority.classList.toggle('is-active', ordenarPor === 'priority');
 }
 
-/* --- Eventos --- */
+/* Eventos */
 form.addEventListener('submit', e => {
   e.preventDefault();
   const titulo = inputTarea.value.trim();
@@ -267,10 +298,25 @@ btnClear.addEventListener('click', () => {
   render();
 });
 
-/* --- Tema --- */
+/* Atajo de teclado Cmd/Ctrl + K para buscar */
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    inputBuscar.focus();
+    inputBuscar.select();
+  }
+});
+
+/* Tema */
 function aplicarTema(tema) {
   document.documentElement.setAttribute('data-theme', tema);
-  themeIcon.innerHTML = tema === 'light' ? '&#9728;' : '&#9790;';
+  if (tema === 'light') {
+    iconMoon.classList.add('hidden');
+    iconSun.classList.remove('hidden');
+  } else {
+    iconSun.classList.add('hidden');
+    iconMoon.classList.remove('hidden');
+  }
   localStorage.setItem(THEME_KEY, tema);
 }
 
@@ -286,7 +332,7 @@ themeToggle.addEventListener('click', () => {
   aplicarTema(actual === 'light' ? 'dark' : 'light');
 });
 
-/* --- Iniciar --- */
+/* Iniciar */
 function iniciar() {
   cargarTema();
   cargar();
