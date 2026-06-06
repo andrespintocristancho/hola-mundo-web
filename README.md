@@ -1,29 +1,27 @@
-# App de Tareas (SPA)
+# App de Tareas Mejorada
 
-Aplicación web de tareas hecha con HTML, CSS y JavaScript puro. Funciona 100% en el navegador (sin backend) y persiste los datos en localStorage.
+Esta aplicación web permite gestionar tareas con funciones adicionales.
 
-## Novedades
-- Filtros: Todas, Pendientes, Completadas.
-- Editar una tarea en línea.
-- Fecha de creación visible por tarea.
-- Contadores: total, pendientes y completadas.
-- Confirmación antes de eliminar completadas.
-- Diseño responsive mejorado para móvil.
-- Preferencia de tema (claro/oscuro) guardada.
+## Nuevas funcionalidades:
+- Barra de búsqueda para filtrar tareas por texto.
+- Selección de **prioridad** (Baja, Media, Alta) y **categoría** (Personal, Trabajo, etc.).
+- Botones para ordenar por **fecha** o **prioridad**.
+- Animaciones visuales al agregar y eliminar tareas.
+- Diseño responsive para dispositivos móviles.
+- Persistencia en **localStorage** (incluye prioridad y categoría).
+- Modo claro/oscuro configurable.
 
-## Estructura
-- `index.html`: Maquetado, filtros y contadores.
-- `style.css`: Estilos modernos, responsive y estados visuales.
-- `script.js`: Lógica (CRUD, filtros, edición, persistencia y tema).
+## Uso:
+1. Abrir `index.html` en el navegador.
+2. Añadir tarea, elegir prioridad y categoría.
+3. Utilizar la barra de búsqueda y los botones de ordenación según preferencia.
+4. Cambiar el tema desde el botón superior.
 
-## Uso
-1. Abre `index.html` en tu navegador o visita la URL de GitHub Pages si está habilitado.
-2. Escribe una tarea y pulsa Enter o el botón Agregar.
-3. Usa los filtros (Todas, Pendientes, Completadas).
-4. Edita con el botón “Editar”; pulsa Enter o haz clic fuera para guardar.
-5. Marca tareas con el checkbox y elimínalas con “Eliminar”.
-6. “Eliminar completadas” pedirá confirmación.
+## Archivos:
+- `index.html`: Estructura HTML.
+- `style.css`: Estilos responsive y animaciones.
+- `script.js`: Lógica de tareas (búsqueda, ordenación, persistencia).
 
-## Notas
-- Todo se guarda en `localStorage`.
-- No requiere backend ni servicios externos.
+### Notas:
+- Todo se guarda en el navegador, no requiere backend.
+- Diseñado para funcionar en GitHub Pages usando la carpeta raíz.
