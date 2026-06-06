@@ -1,21 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <title>App de Tareas Mejorada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>App de Tareas</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="app-header">
     <h1>App de Tareas</h1>
-    <button id="theme-toggle" aria-pressed="false" title="Cambiar tema">🌙</button>
+    <button id="theme-toggle" aria-pressed="false" title="Cambiar tema">🌗</button>
   </header>
+
+  <div class="search-container">
+    <label for="search-input" class="sr-only">Buscar tarea</label>
+    <input id="search-input" type="text" placeholder="Buscar tarea..." />
+  </div>
 
   <main class="container">
     <form id="todo-form" autocomplete="off">
       <label for="todo-input" class="sr-only">Nueva tarea</label>
-      <input id="todo-input" name="todo" type="text" placeholder="Escribe una tarea y pulsa Enter" required>
+      <input id="todo-input" name="todo" type="text" placeholder="Escribe una tarea" required>
+
+      <label for="priority-select">Prioridad</label>
+      <select id="priority-select" name="priority">
+        <option value="low">Baja</option>
+        <option value="medium" selected>Media</option>
+        <option value="high">Alta</option>
+      </select>
+
+      <label for="category-select">Categoría</label>
+      <select id="category-select" name="category">
+        <option value="personal">Personal</option>
+        <option value="work">Trabajo</option>
+        <option value="study">Estudio</option>
+        <option value="other">Otra</option>
+      </select>
+
+      <div class="sort-container">
+        <button id="sort-date-btn" type="button" title="Ordenar por fecha">Ordenar por Fecha</button>
+        <button id="sort-priority-btn" type="button" title="Ordenar por prioridad">Ordenar por Prioridad</button>
+      </div>
+
       <button type="submit" class="add-btn">Agregar</button>
     </form>
 
@@ -31,14 +57,13 @@
 
     <footer class="meta">
       <div class="counters">
-        <span id="count-total">0 total</span>
+        <span id="count-total">0 totales</span>
         <span id="count-pending">0 pendientes</span>
         <span id="count-completed">0 completadas</span>
       </div>
       <button id="clear-completed" class="link-btn" type="button">Eliminar completadas</button>
     </footer>
   </main>
-
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
